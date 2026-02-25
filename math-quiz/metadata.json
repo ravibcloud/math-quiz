@@ -1,0 +1,5 @@
+{
+  "name": "Math Quiz",
+  "description": "A high-energy, gamified math quiz based on STAAR Grade 5 and 6 questions with popping animations and timers.",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": "active_quiz.csv"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    }
+  ]
+}
