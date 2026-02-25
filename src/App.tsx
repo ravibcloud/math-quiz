@@ -220,39 +220,39 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.1 }}
-              className="max-w-md w-full text-center space-y-8 bg-white p-10 rounded-3xl shadow-2xl border border-slate-100"
+              className="max-w-md w-full text-center space-y-4 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100"
             >
               <div className="relative inline-block">
                 <motion.div
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
-                  className="bg-indigo-100 p-6 rounded-full"
+                  className="bg-indigo-100 p-4 rounded-full"
                 >
-                  <Trophy className="w-20 h-20 text-indigo-600" />
+                  <Trophy className="w-12 h-12 text-indigo-600" />
                 </motion.div>
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute -top-2 -right-2 bg-amber-400 p-2 rounded-full shadow-lg"
+                  className="absolute -top-1 -right-1 bg-amber-400 p-1.5 rounded-full shadow-lg"
                 >
-                  <Star className="w-6 h-6 text-white fill-white" />
+                  <Star className="w-4 h-4 text-white fill-white" />
                 </motion.div>
               </div>
               
-              <div className="space-y-4">
-                <h2 className="text-4xl font-black text-slate-900 tracking-tight">Ready to Ace STAAR?</h2>
-                <p className="text-slate-500 text-lg">Test your skills with math questions from real STAAR exams.</p>
+              <div className="space-y-2">
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight">Ready to Ace STAAR?</h2>
+                <p className="text-slate-500 text-base">Test your skills with math questions from real STAAR exams.</p>
               </div>
 
-              <div className="space-y-4">
-                <div className="flex flex-col gap-2 text-left">
-                  <label className="text-xs font-bold uppercase tracking-widest text-slate-400 ml-2">Time per question</label>
+              <div className="space-y-3">
+                <div className="flex flex-col gap-1 text-left">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 ml-2">Time per question</label>
                   <div className="flex gap-2">
                     {[10, 20, 30, 60].map(t => (
                       <button
                         key={t}
                         onClick={() => setQuestionTimer(t)}
-                        className={`flex-1 py-2 rounded-xl font-bold transition-all ${questionTimer === t ? 'bg-indigo-600 text-white shadow-lg' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
+                        className={`flex-1 py-1.5 rounded-xl font-bold text-sm transition-all ${questionTimer === t ? 'bg-indigo-600 text-white shadow-lg' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
                       >
                         {t}s
                       </button>
@@ -263,9 +263,9 @@ export default function App() {
                 <button
                   onClick={startQuiz}
                   disabled={loading}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-5 rounded-2xl text-xl font-black shadow-xl shadow-indigo-200 flex items-center justify-center gap-3 transition-transform active:scale-95 disabled:opacity-50"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 rounded-2xl text-lg font-black shadow-xl shadow-indigo-200 flex items-center justify-center gap-2 transition-transform active:scale-95 disabled:opacity-50"
                 >
-                  {loading ? 'LOADING...' : <><Play className="fill-white" /> START QUIZ</>}
+                  {loading ? 'LOADING...' : <><Play size={20} className="fill-white" /> START QUIZ</>}
                 </button>
               </div>
             </motion.div>
@@ -277,39 +277,39 @@ export default function App() {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
-              className="w-full max-w-5xl flex flex-col gap-6"
+              className="w-full max-w-4xl flex flex-col gap-4"
             >
-              <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-center space-y-6">
-                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 leading-tight">
+              <div className="bg-white p-5 rounded-3xl shadow-xl border border-slate-100 text-center space-y-3">
+                <h2 className="text-lg md:text-xl font-bold text-slate-800 leading-snug">
                   {currentQuestion.text}
                 </h2>
                 
                 {/* Image Support */}
-                {currentQuestion.image && (
-                  <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
+                {currentQuestion.image && currentQuestion.image.trim() !== "" && (
+                  <div className="max-w-md mx-auto rounded-xl overflow-hidden border border-slate-100 shadow-sm">
                     <img 
                       src={currentQuestion.image} 
                       alt="Question Diagram" 
-                      className="w-full h-auto object-contain bg-white"
+                      className="w-full h-auto max-h-[30vh] object-contain bg-white"
                       referrerPolicy="no-referrer"
                     />
                   </div>
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {currentQuestion.options.map((option, index) => (
                   <motion.button
                     key={index}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
                     onClick={() => handleAnswer(index)}
-                    className={`${COLORS[index % COLORS.length]} text-white p-6 rounded-2xl flex items-center gap-6 text-left transition-all shadow-lg group`}
+                    className={`${COLORS[index % COLORS.length]} text-white p-4 rounded-2xl flex items-center gap-4 text-left transition-all shadow-md group`}
                   >
-                    <div className="bg-white/20 w-12 h-12 rounded-xl flex items-center justify-center text-2xl font-black shrink-0 group-hover:bg-white/30">
+                    <div className="bg-white/20 w-10 h-10 rounded-xl flex items-center justify-center text-xl font-black shrink-0 group-hover:bg-white/30">
                       {SHAPES[index % SHAPES.length]}
                     </div>
-                    <span className="text-xl md:text-2xl font-bold">{option}</span>
+                    <span className="text-base md:text-lg font-bold">{option}</span>
                   </motion.button>
                 ))}
               </div>
@@ -321,34 +321,34 @@ export default function App() {
               key="feedback"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              className={`max-w-2xl w-full p-10 rounded-3xl shadow-2xl text-center space-y-8 ${isCorrect ? 'bg-emerald-500' : 'bg-red-500'}`}
+              className={`max-w-xl w-full p-8 rounded-3xl shadow-2xl text-center space-y-6 ${isCorrect ? 'bg-emerald-500' : 'bg-red-500'}`}
             >
               <div className="flex justify-center">
                 {isCorrect ? (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: [0, 1.2, 1], rotate: [0, 10, -10, 0] }}
-                    className="bg-white/20 p-6 rounded-full"
+                    className="bg-white/20 p-4 rounded-full"
                   >
-                    <CheckCircle2 className="w-24 h-24 text-white" />
+                    <CheckCircle2 className="w-16 h-16 text-white" />
                   </motion.div>
                 ) : (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: [0, 1.2, 1], x: [0, -10, 10, -10, 10, 0] }}
-                    className="bg-white/20 p-6 rounded-full"
+                    className="bg-white/20 p-4 rounded-full"
                   >
-                    <XCircle className="w-24 h-24 text-white" />
+                    <XCircle className="w-16 h-16 text-white" />
                   </motion.div>
                 )}
               </div>
 
-              <div className="text-white space-y-2">
-                <h2 className="text-5xl font-black uppercase tracking-tighter">
+              <div className="text-white space-y-1">
+                <h2 className="text-3xl font-black uppercase tracking-tighter">
                   {isCorrect ? 'Correct!' : 'Incorrect'}
                 </h2>
                 {!isCorrect && correctAnswerIndex !== null && (
-                  <p className="text-xl font-bold opacity-90">
+                  <p className="text-lg font-bold opacity-90">
                     The correct answer was: {currentQuestion.options[correctAnswerIndex]}
                   </p>
                 )}
@@ -356,10 +356,10 @@ export default function App() {
 
               <button
                 onClick={nextQuestion}
-                className="bg-white text-slate-900 px-10 py-4 rounded-2xl text-xl font-black shadow-xl hover:bg-slate-50 transition-colors flex items-center gap-3 mx-auto"
+                className="bg-white text-slate-900 px-8 py-3 rounded-2xl text-lg font-black shadow-xl hover:bg-slate-50 transition-colors flex items-center gap-2 mx-auto"
               >
                 {currentQuestionIndex === questions.length - 1 ? 'SEE RESULTS' : 'NEXT QUESTION'}
-                <ArrowRight />
+                <ArrowRight size={20} />
               </button>
             </motion.div>
           )}
@@ -369,41 +369,41 @@ export default function App() {
               key="finished"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              className="max-w-2xl w-full bg-white p-12 rounded-[3rem] shadow-2xl border border-slate-100 text-center space-y-10"
+              className="max-w-xl w-full bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-100 text-center space-y-6"
             >
-              <div className="space-y-4">
+              <div className="space-y-2">
                 <div className="relative inline-block">
-                  <Trophy className="w-24 h-24 text-amber-400 mx-auto" />
+                  <Trophy className="w-16 h-16 text-amber-400 mx-auto" />
                   <motion.div
                     animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity }}
                     className="absolute inset-0 bg-amber-400/20 blur-2xl rounded-full"
                   />
                 </div>
-                <h2 className="text-5xl font-black text-slate-900 tracking-tighter">Quiz Complete!</h2>
+                <h2 className="text-3xl font-black text-slate-900 tracking-tighter">Quiz Complete!</h2>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-indigo-50 p-6 rounded-3xl border border-indigo-100">
-                  <div className="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-1">Your Score</div>
-                  <div className="text-5xl font-black text-indigo-600">{score}</div>
-                  <div className="text-sm font-bold text-indigo-400">out of {questions.length}</div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-indigo-50 p-4 rounded-3xl border border-indigo-100">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-indigo-400 mb-1">Your Score</div>
+                  <div className="text-3xl font-black text-indigo-600">{score}</div>
+                  <div className="text-[10px] font-bold text-indigo-400">out of {questions.length}</div>
                 </div>
-                <div className="bg-emerald-50 p-6 rounded-3xl border border-emerald-100">
-                  <div className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-1">Accuracy</div>
-                  <div className="text-5xl font-black text-emerald-600">{Math.round((score / questions.length) * 100)}%</div>
-                  <div className="text-sm font-bold text-emerald-400">Success Rate</div>
+                <div className="bg-emerald-50 p-4 rounded-3xl border border-emerald-100">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 mb-1">Accuracy</div>
+                  <div className="text-3xl font-black text-emerald-600">{Math.round((score / questions.length) * 100)}%</div>
+                  <div className="text-[10px] font-bold text-emerald-400">Success Rate</div>
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <button
                   onClick={restartQuiz}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-5 rounded-2xl text-xl font-black shadow-xl shadow-indigo-200 flex items-center justify-center gap-3 transition-transform active:scale-95"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl text-lg font-black shadow-xl shadow-indigo-200 flex items-center justify-center gap-2 transition-transform active:scale-95"
                 >
-                  <RotateCcw /> PLAY AGAIN
+                  <RotateCcw size={20} /> PLAY AGAIN
                 </button>
-                <p className="text-slate-400 font-medium">Great job! Keep practicing to master STAAR Math.</p>
+                <p className="text-slate-400 text-sm font-medium">Great job! Keep practicing to master STAAR Math.</p>
               </div>
             </motion.div>
           )}
