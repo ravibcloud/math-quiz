@@ -67,12 +67,14 @@ export default function App() {
     setLoading(true);
     try {
       const response = await fetch('/api/questions');
+      if (!response.ok) throw new Error(`Server responded with ${response.status}`);
       const data = await response.json();
       setQuestions(data);
       setTimeLeft(questionTimer);
       setGameState('playing');
     } catch (error) {
       console.error("Failed to load questions", error);
+      alert("Oops! Could not connect to the Quiz Brain. Please refresh and try again.");
     } finally {
       setLoading(false);
     }
@@ -204,7 +206,7 @@ export default function App() {
         {gameState === 'start' && (
           <div className="flex items-center gap-2 text-slate-500 text-sm">
             <Settings className="w-4 h-4" />
-            <span>20 Questions • {questionTimer}s each</span>
+            <span>{questions.length || 20} Questions • {questionTimer}s each</span>
           </div>
         )}
       </header>
@@ -239,7 +241,7 @@ export default function App() {
               
               <div className="space-y-4">
                 <h2 className="text-4xl font-black text-slate-900 tracking-tight">Ready to Ace STAAR?</h2>
-                <p className="text-slate-500 text-lg">Test your skills with 20 gamified math questions from real STAAR exams.</p>
+                <p className="text-slate-500 text-lg">Test your skills with math questions from real STAAR exams.</p>
               </div>
 
               <div className="space-y-4">
@@ -275,12 +277,24 @@ export default function App() {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
-              className="w-full max-w-5xl flex flex-col gap-8"
+              className="w-full max-w-5xl flex flex-col gap-6"
             >
-              <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-center">
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-800 leading-tight">
+              <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-center space-y-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 leading-tight">
                   {currentQuestion.text}
                 </h2>
+                
+                {/* Image Support */}
+                {currentQuestion.image && (
+                  <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
+                    <img 
+                      src={currentQuestion.image} 
+                      alt="Question Diagram" 
+                      className="w-full h-auto object-contain bg-white"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

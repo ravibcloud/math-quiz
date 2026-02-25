@@ -1,8 +1,13 @@
 {
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": "active_quiz.xlsx"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.ts"
+      "destination": "/api"
     }
   ]
 }
