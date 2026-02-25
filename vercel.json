@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/index.ts": {
-      "includeFiles": "active_quiz.xlsx"
+      "includeFiles": "active_quiz.csv"
     }
   },
   "rewrites": [

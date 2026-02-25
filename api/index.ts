@@ -19,18 +19,18 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Helper to read the Excel file
-const getQuestionsFromExcel = () => {
+// Helper to read the CSV file
+const getQuestionsFromCSV = () => {
   try {
-    const filePath = path.join(process.cwd(), "active_quiz.xlsx");
+    const filePath = path.join(process.cwd(), "active_quiz.csv");
     
     if (!fs.existsSync(filePath)) {
-      console.error("active_quiz.xlsx not found at", filePath);
+      console.error("active_quiz.csv not found at", filePath);
       return [];
     }
 
-    // Use the stable loader
-    const workbook = xlsx.readFile(filePath);
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const workbook = xlsx.read(fileContent, { type: 'string' });
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     const data = xlsx.utils.sheet_to_json(worksheet);
@@ -65,14 +65,14 @@ const getQuestionsFromExcel = () => {
       };
     });
   } catch (error) {
-    console.error("Detailed Excel Error:", error);
+    console.error("Detailed CSV Error:", error);
     return [];
   }
 };
 
 // 2. Get Questions
 app.get("/api/questions", (req, res) => {
-  const questions = getQuestionsFromExcel();
+  const questions = getQuestionsFromCSV();
   const safeQuestions = questions.map(({ id, text, options, image }) => ({
     id,
     text,
@@ -85,7 +85,7 @@ app.get("/api/questions", (req, res) => {
 // 3. Check Answer
 app.post("/api/check", (req, res) => {
   const { questionId, selectedOption } = req.body;
-  const questions = getQuestionsFromExcel();
+  const questions = getQuestionsFromCSV();
   const question = questions.find((q) => q.id === questionId);
 
   if (!question) {
