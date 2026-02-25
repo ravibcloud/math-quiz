@@ -1,14 +1,22 @@
 import express from "express";
-import * as xlsx from "xlsx";
+import { createRequire } from "module";
 import path from "path";
 import fs from "fs";
+
+// This is the most stable way to load 'xlsx' on Vercel
+const require = createRequire(import.meta.url);
+const xlsx = require("xlsx");
 
 const app = express();
 app.use(express.json());
 
-// 1. Health Check
+// 1. Health Check (Now with a version number)
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", message: "The Quiz Brain is Awake!" });
+  res.json({ 
+    status: "ok", 
+    version: "1.0.5", 
+    message: "The Quiz Brain is Awake and using the new Loader!" 
+  });
 });
 
 // Helper to read the Excel file
@@ -17,10 +25,11 @@ const getQuestionsFromExcel = () => {
     const filePath = path.join(process.cwd(), "active_quiz.xlsx");
     
     if (!fs.existsSync(filePath)) {
-      console.error("quiz.xlsx not found at", filePath);
+      console.error("active_quiz.xlsx not found at", filePath);
       return [];
     }
 
+    // Use the stable loader
     const workbook = xlsx.readFile(filePath);
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
@@ -43,7 +52,6 @@ const getQuestionsFromExcel = () => {
         if (imageValue.startsWith('http')) {
           finalImage = imageValue;
         } else {
-          // Local files are expected in /public/quiz-images/ which maps to /quiz-images/ in the browser
           finalImage = `/quiz-images/${imageValue}`;
         }
       }
@@ -57,7 +65,7 @@ const getQuestionsFromExcel = () => {
       };
     });
   } catch (error) {
-    console.error("Error reading Excel:", error);
+    console.error("Detailed Excel Error:", error);
     return [];
   }
 };
