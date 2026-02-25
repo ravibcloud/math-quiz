@@ -1,33 +1,7 @@
-import express from "express";
-import { QUIZ_QUESTIONS } from "../src/constants";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@700&display=swap');
+@import "tailwindcss";
 
-const app = express();
-app.use(express.json());
-
-// API Route to get questions WITHOUT answers (Security!)
-app.get("/api/questions", (req, res) => {
-  const safeQuestions = QUIZ_QUESTIONS.map(({ id, text, options }) => ({
-    id,
-    text,
-    options,
-  }));
-  res.json(safeQuestions);
-});
-
-// API Route to check an answer (Security!)
-app.post("/api/check", (req, res) => {
-  const { questionId, selectedOption } = req.body;
-  const question = QUIZ_QUESTIONS.find((q) => q.id === questionId);
-
-  if (!question) {
-    return res.status(404).json({ error: "Question not found" });
-  }
-
-  const isCorrect = question.correctAnswer === selectedOption;
-  res.json({ 
-    isCorrect, 
-    correctAnswer: isCorrect ? null : question.correctAnswer 
-  });
-});
-
-export default app;
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
