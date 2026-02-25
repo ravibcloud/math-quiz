@@ -1,13 +1,10 @@
 import express from "express";
 
-export interface Question {
-  id: number;
-  text: string;
-  options: string[];
-  correctAnswer: number;
-}
+const app = express();
+app.use(express.json());
 
-export const QUIZ_QUESTIONS: Question[] = [
+// The "Answer Key" is stored safely here on the server
+const QUIZ_QUESTIONS = [
   {
     id: 1,
     text: "Rebecca bought 8 air filters at $16.95 each and used a $7.50 coupon. How much did she pay?",
@@ -130,10 +127,7 @@ export const QUIZ_QUESTIONS: Question[] = [
   }
 ];
 
-const app = express();
-app.use(express.json());
-
-// API Route to get questions WITHOUT answers (Security!)
+// Send questions to the browser (without answers)
 app.get("/api/questions", (req, res) => {
   const safeQuestions = QUIZ_QUESTIONS.map(({ id, text, options }) => ({
     id,
@@ -143,7 +137,7 @@ app.get("/api/questions", (req, res) => {
   res.json(safeQuestions);
 });
 
-// API Route to check an answer (Security!)
+// Check if a student's answer is correct
 app.post("/api/check", (req, res) => {
   const { questionId, selectedOption } = req.body;
   const question = QUIZ_QUESTIONS.find((q) => q.id === questionId);
